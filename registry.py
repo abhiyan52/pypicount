@@ -1,3 +1,9 @@
+"""
+    author: abhiyanhaze
+    description: All the supported languages are registerd to the LanguageSyntaxRegistry
+    .For any extension the registry matches the first parser which supports to extension
+"""
+
 from syntax_parser.java_syntax import JavaSyntax
 from syntax_parser.python_syntax import PythonSyntax
 

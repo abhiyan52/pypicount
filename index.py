@@ -14,6 +14,7 @@ import asyncio
 
 
 class LineCounterFactory:
+    # Factory for creating Counters with appropriate interface for parsing
     @staticmethod
     def create_counter(filepath, extension):
         if not LanguageSyntaxRegistry._initialized:
@@ -27,7 +28,7 @@ class LineCounterFactory:
         return counter_obj
 
 
-def print_as_table(counter_result):
+def print_as_table(counter_result):  # Helper function to print the result as table
     extra_keys = counter_result.extra.keys()
     field_names = (
         [

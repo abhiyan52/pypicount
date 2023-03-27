@@ -1,3 +1,4 @@
 *.pyc
 *.cython
 .pyc
+*.cython.pyc

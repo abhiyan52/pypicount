@@ -5,6 +5,7 @@ from dataclasses import dataclass, asdict, field
 
 @dataclass
 class PythonLineVisitor:
+    # Visitor class that tags a line and increments the count
     imports_count: int = field(init=False, default=0)
     print_statements: int = field(init=False, default=0)
 

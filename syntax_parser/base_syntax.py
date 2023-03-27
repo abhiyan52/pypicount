@@ -33,5 +33,5 @@ class LanguageSyntax(ABC):
         pass
 
     @property
-    def extra(self):
+    def extra(self):  # For holding language specific details like count of decorators in py
         return {}

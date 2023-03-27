@@ -1,3 +1,8 @@
+"""
+    author: abhiyanhaze
+    description: Counter implementation logic are present in this file
+"""
+
 import os
 from dataclasses import dataclass, field
 
@@ -9,9 +14,10 @@ class CounterResult:
     comment_lines: int = 0
     code_lines: int = 0
     extra: dict = field(init=True, default=dict)
-    class_name: str = field(init=True, default=dict)
+    class_name: str = field(init=True, default=dict) # Identifying the language / file type
 
     def __add__(self, other):
+        # Overriding add method to add multiple counts from files together
         if self.class_name != other.class_name:
             raise ValueError("The counters should be of same class")
 
