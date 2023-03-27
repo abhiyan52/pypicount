@@ -18,9 +18,6 @@ class CounterResult:
 
     def __add__(self, other):
         # Overriding add method to add multiple counts from files together
-        if self.class_name != other.class_name:
-            raise ValueError("The counters should be of same class")
-
         for key, value in self.extra.items():
             if type(value) in (int, float,):
                 self.extra[key] += other.extra[key]

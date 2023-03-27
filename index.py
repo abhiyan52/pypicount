@@ -87,12 +87,23 @@ def walk_and_count_lines(directory):
         elif result:
             unsupported_list.append(result)
 
+    final_counter = CounterResult(extra={})
+    for counted_value in counter_results:
+        if counted_value and not final_counter:
+            final_counter = counted_value
+        elif counted_value:
+            final_counter += counted_value
+
     print("\n\n---------------------------------------------\n\n\n")
     print("The result for visting path %s is:", os.path.abspath(directory))
 
     for language_parser_class, aggregated_result in lang_wise_dict.items():
         print("Aggregated result from %s" % language_parser_class)
         print_as_table(aggregated_result)
+
+    print("------------------------\n")
+    print("Aggregated all langugae count:")
+    print_as_table(final_counter)
     return counter_results
 
 
