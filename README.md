@@ -30,8 +30,7 @@ python index.py <filename>
 
 Libraries used:
 
-1. AsyncIO: Traversing the files and counting them concurrently for directories
-2. PrettyTable: To print the output in tabular form
+1. PrettyTable: To print the output in tabular form
 
 
 ## Support for New Language

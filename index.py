@@ -10,7 +10,6 @@ import time
 from registry import LanguageSyntaxRegistry
 from counter import LineCounter, CounterResult
 from prettytable import PrettyTable
-import asyncio
 
 
 class LineCounterFactory:
@@ -54,40 +53,27 @@ def print_as_table(counter_result):  # Helper function to print the result as ta
 
 
 def count_file(filepath):
-    print(filepath)
-    print("-------------------------------\n\n")
-    _, ext = os.path.splitext(filepath)
-    counter = LineCounterFactory.create_counter(filepath, ext)
-    if not counter:
-        return filepath
-    result = counter.count_lines()
-    print("The result for filepath %s is" % filepath)
-    print_as_table(result)
-    return result
+    try:
+        _, ext = os.path.splitext(filepath)
+        counter = LineCounterFactory.create_counter(filepath, ext)
+        if not counter:
+            return filepath
+        result = counter.count_lines()
+        print("The result for filepath %s is" % filepath)
+        print_as_table(result)
+        return result
+    except Exception:
+        import traceback
+        traceback.print_exc()
+        return None
 
 
-async def count_lines_for_file(filepath):
-    result = await asyncio.to_thread(count_file, filepath)
-    return result
-
-
-async def walk_and_count_lines(directory):
-    counters = []
-    tasks = []
+def walk_and_count_lines(directory):
+    counter_results = []
     for root, _, files in os.walk(directory):
         for file_name in files:
             full_path = os.path.join(root, file_name)
-            task = asyncio.create_task(count_lines_for_file(full_path))
-            tasks.append(task)
-    for task in asyncio.as_completed(tasks):
-        counter = await task
-        counters.append(counter)
-    return counters
-
-
-async def count_lines_for_directory(directory):
-    t1 = time.time()
-    counter_results = await walk_and_count_lines(directory)
+            counter_results.append(count_file(full_path))
 
     lang_wise_dict = {}
     unsupported_list = []
@@ -107,10 +93,8 @@ async def count_lines_for_directory(directory):
     for language_parser_class, aggregated_result in lang_wise_dict.items():
         print("Aggregated result from %s" % language_parser_class)
         print_as_table(aggregated_result)
+    return counter_results
 
-    t2 = time.time()
-
-    print(f"Scanned {len(counter_results)} files in {t2 - t1} seconds")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -131,4 +115,9 @@ if __name__ == "__main__":
                 print("The following file type %s is not supported" % filepath)
             print("---------------------------------------------")
         else:
-            asyncio.run(count_lines_for_directory(filepath))
+            # asyncio.run(count_lines_for_directory(filepath))
+            t1 = time.time()
+            counter_results = walk_and_count_lines(filepath)
+            t2 = time.time()
+            print(f"Scanned {len(counter_results)} files in {t2 - t1} seconds")
+
