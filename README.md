@@ -59,3 +59,9 @@ class RustParser(LanguageSyntax):
         pass
 
 ```
+
+## Screenshots
+
+![alt text](https://github.com/abhiyan52/pypicount/blob/master/assets/file_test.png?raw=true)
+
+![alt text](https://github.com/abhiyan52/pypicount/blob/master/assets/folder_read.png?raw=true)
