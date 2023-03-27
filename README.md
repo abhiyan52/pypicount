@@ -1,6 +1,6 @@
 # Pypi Count
 
-A lightweight, extensible module to count lines
+A lightweight, extensible module to count lines. Currently it supports python and java.
 
 ## Installation
 
